@@ -1,30 +1,25 @@
 class Unique(object):
     def __init__(self, items, **kwargs):
-        self.__r = []
-        if kwargs == {}:
-            try:
-                self.__r = sorted(set([i for i in items]))
-            finally:
-                return
-
-        for key, value in kwargs.items():
-            if key == "ignore_case" and value == True:
-                try:
-                    self.__r = sorted(set([i.lower() for i in items]))
-                finally:
-                    break
-            
-                 
-    def unique(self):
-        return self.__r
+      self.i=[]
+      for key, value in kwargs.items():
+        if key == 'ignore_case' and value == True:
+          items =[j.lower() for j in items]
+      for j in items:
+        if j not in self.i:
+          self.i.append(j)
+        
     def __next__(self):
-        try:
-            temp = self.__r[self.begin]
-            self.begin += 1
-            return temp
-        except:
-            raise StopIteration
-    def __str__(self):
-        return str(self.__r)
+      try:
+        x = self.i[self.begin]
+        self.begin += 1
+        return x
+      except:
+        raise StopIteration
+
     def __iter__(self):
-        return self
+      self.begin = 0
+      return self
+
+data = ['a', 'A', 'b', 'B', 'a', 'A','b', 'B']
+for i in Unique(data,ignore_case=True):
+ print(i)

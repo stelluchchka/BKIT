@@ -1,3 +1,5 @@
+data = [4, -30, 100, -100, 123, 1, 0, -1, -4]
+
 def sort_array(data, temp):
     if temp == 1:
         result = sorted(data, key = abs)[::-1]
@@ -7,3 +9,5 @@ def sort_array(data, temp):
         print(result_with_lambda)
     else:
         print("ERROR")
+
+# sort_array(data, 1)

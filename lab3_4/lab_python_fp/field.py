@@ -1,19 +1,12 @@
 def field(items, *args):
     assert len(args) > 0
-    if len(args) == 1:
-        temp = []
-        for i in items:
-            temp_key = i.get(args[0], "None")
-            if temp_key != "None":
-                temp.append(temp_key)
-        return temp
-    else:
-        k = []
-        for i in items:
-            temp = {}
-            for j in args:
-                temp_key = i.get(j, "None")
-                if temp_key != "None":
-                    temp.update({j: temp_key})
-            k.append(temp)
-        return k
+    for x in items:
+      for y in args:
+        if y in x:
+          print(x[y])
+# goods = [
+#    {'title': 'Ковер', 'price': 2000, 'color': 'green'},
+#    {'title': 'Диван для отдыха', 'price': 5300, 'color': 'black'}
+# ]
+
+# field(goods,'title', 'price','xc','dasd')

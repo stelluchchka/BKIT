@@ -1,28 +1,22 @@
 import json
+from print_result import print_result
+from cm_timer import cm_timer_1
+from unique import Unique
 from field import field
 from gen_random import gen_random
-from unique import Unique
-from sort import sort_array
-from print_result import print_result
-from cm_timer import cm_timer_1, cm_timer_2
-
 from operator import concat
 
-def f1(data):
-    return Unique(field(data, 'job-name'), ignore_case = True).unique()
 
-def f2(temp):
-    return filter(lambda a: a.startswith('программист'), temp)
+def f1(a):
+    return Unique([i['job-name'] for i in field(data, 'job-name')], ignore_case=True)
+def f2(a):
+    return filter(lambda a: a.startswith('программист'), a)
+def f3(a):
+    return list(map(lambda x: concat(x, ' c опытом Python'), a))
+def f4(a):
+    return zip(a, gen_random(len(a),137287, 200000))
 
-def f3(temp):
-    return list(map(lambda x: concat(x, ' c опытом Python'), temp))
-
-def f4(temp):
-    return zip(temp, gen_random(len(temp), 100000, 200000))
-
-if __name__ == '__main__':    
-    with open('lab_python_fp/data_light.json', encoding = "UTF-8-sig") as f:
-        data = json.load(f)
-    with cm_timer_1():
-        for i in f4(f3(f2(f1(data)))):  
-            print(i)
+with open('data_light.json','r',encoding='utf-8') as f:
+    data = json.load(f)
+    for i in f4(f3(f2(f1(data)))):
+        print(i)
