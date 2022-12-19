@@ -10,7 +10,8 @@ third = ["Злые языки могут говорить вам обратно�
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
-    if message.text == "Привет" or message.text == "/start" or message.text == "Ещё" or message.text == "привет":
+    c = message.text.lower() 
+    if c == "привет" or c == "/start" or c == "ещё":
         bot.send_message(message.from_user.id, "Вижу, ты заинтригован, сейчас я расскажу тебе гороскоп на сегодня ^_^")
         keyboard = types.InlineKeyboardMarkup()
         key_oven = types.InlineKeyboardButton(text='Овен', callback_data='zodiac')
@@ -38,18 +39,22 @@ def get_text_messages(message):
         key_ryby = types.InlineKeyboardButton(text='Рыбы', callback_data='zodiac')
         keyboard.add(key_ryby)
         bot.send_message(message.from_user.id, text='Выбери свой знак зодиака', reply_markup=keyboard)
-    elif message.text == "/help":
-        bot.send_message(message.from_user.id, "Напиши 'Привет'")
+    elif c == "/help":
+        bot.send_message(message.from_user.id, "Напиши 'привет'")
+    elif с == "нет":
+        bot.send_message(message.from_user.id, "Пока!")
     else:
         bot.send_message(message.from_user.id, "Я тебя не понимаю. Напиши /help.")
-
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
     if call.data == "zodiac": 
         msg = random.choice(first) + ' ' + random.choice(second) + ' ' + random.choice(second_add) + ' ' + random.choice(third)
         bot.send_message(call.message.chat.id, msg)
-        bot.send_message(call.message.chat.id, 'Если хочешь новый гороскоп, напиши "Ещё"')
-
+        button_more = types.KeyboardButton('Ещё')
+        button_no = types.KeyboardButton('Нет')
+        greet_kb2 = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add(button_more)
+        greet_kb2.add(button_no)
+        bot.send_message(call.message.chat.id, text='Ещё гороскоп?', reply_markup= greet_kb2)
 
 bot.polling(none_stop=True, interval=0)
